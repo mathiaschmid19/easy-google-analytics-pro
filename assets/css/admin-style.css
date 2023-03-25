@@ -1,0 +1,37 @@
+/* admin-style.css */
+.egap-settings-wrapper {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.egap-settings-wrapper h2 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.egap-settings-wrapper form {
+    display: grid;
+    gap: 20px;
+}
+
+.egap-settings-wrapper label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.egap-settings-wrapper input[type="text"],
+.egap-settings-wrapper select {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
