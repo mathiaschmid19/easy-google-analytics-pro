@@ -25,8 +25,9 @@ function egap_enqueue_admin_assets($hook) {
     }
 
     
-    wp_enqueue_style('egap-admin-style', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), '1.0.0');
-    wp_enqueue_script('egap-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-script.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_style('egap-admin-style', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), '1.0.4');
+    wp_enqueue_script('egap-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-script.js', array('jquery'), '1.0.4', true);
+
 }
 add_action('admin_enqueue_scripts', 'egap_enqueue_admin_assets');
 
@@ -45,7 +46,8 @@ add_action('admin_init', 'egap_register_settings');
 
 // Load plugin text domain for translations.
 function egap_load_textdomain() {
-    load_plugin_textdomain('easy-google-analytics-pro', false, basename(dirname(__FILE__)) . '/languages/');
+    load_plugin_textdomain('easy-google-analytics-pro', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 }
+
 add_action('plugins_loaded', 'egap_load_textdomain');
 

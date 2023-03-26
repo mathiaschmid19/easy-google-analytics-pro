@@ -44,6 +44,14 @@ function egap_initialize_plugin_options() {
         'easy-google-analytics-pro',
         'egap_general_settings'
     );
+
+    add_settings_field(
+        'egap_anonymize_ip',
+        __('Anonymize IP Addresses', 'easy-google-analytics-pro'),
+        'egap_anonymize_ip_callback',
+        'easy-google-analytics-pro',
+        'egap_general_settings'
+    );
 }
 add_action('admin_init', 'egap_initialize_plugin_options');
 
@@ -57,46 +65,6 @@ function egap_tracking_id_callback() {
     $tracking_id = isset($options['egap_tracking_id']) ? $options['egap_tracking_id'] : '';
     echo '<input type="text" id="egap_tracking_id" name="egap_settings[egap_tracking_id]" value="' . esc_attr($tracking_id) . '">';
 }
-
-// Add this new function at the beginning of the file
-function egap_add_settings_fields() {
-    // ... (all the add_settings_field() and add_settings_section() calls)
-    add_settings_section(
-        'egap_general_settings',
-        __('General Settings', 'easy-google-analytics-pro'),
-        'egap_general_settings_callback',
-        'easy-google-analytics-pro'
-    );
-
-    add_settings_field(
-        'egap_tracking_id',
-        __('Google Analytics Tracking ID', 'easy-google-analytics-pro'),
-        'egap_tracking_id_callback',
-        'easy-google-analytics-pro',
-        'egap_general_settings'
-    );
-    
-}
-// Hook the new function to the admin_init action
-add_action('admin_init', 'egap_add_settings_fields');
-
-
-// Callback function for the new settings field
-function egap_auto_display_opt_out_callback() {
-    $options = get_option('egap_settings');
-    $auto_display_opt_out = isset($options['egap_auto_display_opt_out']) ? $options['egap_auto_display_opt_out'] : '';
-    echo '<input type="checkbox" id="egap_auto_display_opt_out" name="egap_settings[egap_auto_display_opt_out]" value="1"' . checked(1, $auto_display_opt_out, false) . '>';
-    echo '<label for="egap_auto_display_opt_out">' . __('Display Opt-Out Box automatically', 'easy-google-analytics-pro') . '</label>';
-}
-
-function egap_auto_display_opt_out() {
-    $options = get_option('egap_settings');
-    if (isset($options['egap_auto_display_opt_out']) && $options['egap_auto_display_opt_out']) {
-        add_action('wp_footer', 'egap_opt_out_box');
-    }
-}
-add_action('wp_loaded', 'egap_auto_display_opt_out');
-
 
 function egap_anonymize_ip_callback() {
     $options = get_option('egap_settings');
