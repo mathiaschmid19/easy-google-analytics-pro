@@ -3,7 +3,7 @@
  * Plugin Name: Easy Google Analytics Pro
  * Plugin URI: #
  * Description: A lightweight and fast plugin for integrating Google Analytics into your WordPress website, with customizable features and advanced tracking options.
- * Version: 1.0.2
+ * Version: 1.0.4
  * Author: Amine Ouhannou
  * Author URI: #
  * License: GPL-2.0+
