@@ -58,13 +58,28 @@ function egap_tracking_id_callback() {
     echo '<input type="text" id="egap_tracking_id" name="egap_settings[egap_tracking_id]" value="' . esc_attr($tracking_id) . '">';
 }
 
-add_settings_field(
-    'egap_anonymize_ip',
-    __('Anonymize IP Addresses', 'easy-google-analytics-pro'),
-    'egap_anonymize_ip_callback',
-    'easy-google-analytics-pro',
-    'egap_general_settings'
-);
+// Add this new function at the beginning of the file
+function egap_add_settings_fields() {
+    // ... (all the add_settings_field() and add_settings_section() calls)
+    add_settings_section(
+        'egap_general_settings',
+        __('General Settings', 'easy-google-analytics-pro'),
+        'egap_general_settings_callback',
+        'easy-google-analytics-pro'
+    );
+
+    add_settings_field(
+        'egap_tracking_id',
+        __('Google Analytics Tracking ID', 'easy-google-analytics-pro'),
+        'egap_tracking_id_callback',
+        'easy-google-analytics-pro',
+        'egap_general_settings'
+    );
+    
+}
+// Hook the new function to the admin_init action
+add_action('admin_init', 'egap_add_settings_fields');
+
 
 // Callback function for the new settings field
 function egap_auto_display_opt_out_callback() {
