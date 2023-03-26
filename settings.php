@@ -104,30 +104,3 @@ function egap_anonymize_ip_callback() {
     echo '<input type="checkbox" id="egap_anonymize_ip" name="egap_settings[egap_anonymize_ip]" value="1"' . checked(1, $anonymize_ip, false) . '>';
     echo '<label for="egap_anonymize_ip">' . __('Anonymize IP addresses for Google Analytics tracking', 'easy-google-analytics-pro') . '</label>';
 }
-
-function egap_output_tracking_code() {
-    $options = get_option('egap_settings');
-    $tracking_id = isset($options['egap_tracking_id']) ? $options['egap_tracking_id'] : '';
-    $anonymize_ip = isset($options['egap_anonymize_ip']) ? $options['egap_anonymize_ip'] : '';
-
-    if (!$tracking_id) {
-        return;
-    }
-
-    ?>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', '<?php echo esc_js($tracking_id); ?>', 'auto');
-    <?php if ($anonymize_ip) : ?>
-    ga('set', 'anonymizeIp', true);
-    <?php endif; ?>
-    ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
-    <?php
-}
