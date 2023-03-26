@@ -24,6 +24,7 @@ function egap_enqueue_admin_assets($hook) {
         return;
     }
 
+    
     wp_enqueue_style('egap-admin-style', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), '1.0.0');
     wp_enqueue_script('egap-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-script.js', array('jquery'), '1.0.0', true);
 }
@@ -34,6 +35,7 @@ add_action('admin_enqueue_scripts', 'egap_enqueue_admin_assets');
 require_once plugin_dir_path(__FILE__) . 'settings.php';
 require_once plugin_dir_path(__FILE__) . 'tracking-code.php';
 require_once plugin_dir_path(__FILE__) .  'dashboard-widget.php';
+require_once plugin_dir_path(__FILE__) . 'cookie-consent.php';
 
 // Register the settings.
 function egap_register_settings() {
