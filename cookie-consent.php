@@ -1,4 +1,5 @@
 <?php
+
 function egap_cookie_consent_banner() {
     if (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted') {
         ?>
@@ -6,36 +7,15 @@ function egap_cookie_consent_banner() {
             <p><?php _e('We use cookies to analyze our website traffic and improve your experience. By using our site, you agree to our use of cookies.', 'easy-google-analytics-pro'); ?></p>
             <button id="egap-cookie-consent-accept"><?php _e('Accept', 'easy-google-analytics-pro'); ?></button>
         </div>
-        <style>
-            .egap-cookie-consent {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 15px;
-                background-color: #333;
-                color: #fff;
-                text-align: center;
-                z-index: 1000;
-                display: none;
-            }
-        </style>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var consentBanner = document.getElementById('egap-cookie-consent');
-                var acceptButton = document.getElementById('egap-cookie-consent-accept');
-
-                if (!document.cookie.includes('egap_cookie_consent=accepted')) {
-                    consentBanner.style.display = 'block';
-                }
-
-                acceptButton.addEventListener('click', function() {
-                    document.cookie = 'egap_cookie_consent=accepted; max-age=31536000; path=/';
-                    consentBanner.style.display = 'none';
-                });
-            });
-        </script>
         <?php
     }
 }
 add_action('wp_footer', 'egap_cookie_consent_banner');
+
+function egap_enqueue_cookie_consent_assets() {
+    if (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted') {
+        wp_enqueue_style('egap-cookie-consent-style', plugin_dir_url(__FILE__) . 'assets/css/cookie-consent-style.css', array(), '1.0.0');
+        wp_enqueue_script('egap-cookie-consent-script', plugin_dir_url(__FILE__) . 'assets/js/cookie-consent-script.js', array(), '1.0.0', true);
+    }
+}
+add_action('wp_enqueue_scripts', 'egap_enqueue_cookie_consent_assets');

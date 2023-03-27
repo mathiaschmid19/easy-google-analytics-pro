@@ -1,0 +1,12 @@
+.egap-cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    z-index: 1000;
+    display: none;
+}
