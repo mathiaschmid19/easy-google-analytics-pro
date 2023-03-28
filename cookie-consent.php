@@ -1,27 +1,44 @@
 <?php
 
-function egap_cookie_consent_banner() {
-    $egap_settings = get_option('egap_settings');
-    $cookie_consent_enabled = isset($egap_settings['egap_enable_cookie_consent']) ? $egap_settings['egap_enable_cookie_consent'] : '';
+function egap_output_tracking_code() {
+    if (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted') {
+        return;
+    }
 
-    if ($cookie_consent_enabled && (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted')) {
-        ?>
-        <div id="egap-cookie-consent" class="egap-cookie-consent">
-            <p><?php _e('We use cookies to analyze our website traffic and improve your experience. By using our site, you agree to our use of cookies.', 'easy-google-analytics-pro'); ?></p>
-            <button id="egap-cookie-consent-accept"><?php _e('Accept', 'easy-google-analytics-pro'); ?></button>
-        </div>
-        <?php
+    egap_insert_tracking_code();
+}
+add_action('wp_footer', 'egap_output_tracking_code');
+
+function egap_insert_tracking_code() {
+    $egap_settings = get_option('egap_settings');
+    $tracking_id = isset($egap_settings['tracking_id']) ? $egap_settings['tracking_id'] : '';
+
+    // Check if the tracking ID is set.
+    if ($tracking_id) {
+        // Your tracking code output here.
     }
 }
-add_action('wp_footer', 'egap_cookie_consent_banner');
 
-function egap_enqueue_cookie_consent_assets() {
-    $egap_settings = get_option('egap_settings');
-    $cookie_consent_enabled = isset($egap_settings['egap_enable_cookie_consent']) ? $egap_settings['egap_enable_cookie_consent'] : '';
-
-    if ($cookie_consent_enabled && (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted')) {
-        wp_enqueue_style('egap-cookie-consent-style', plugin_dir_url(__FILE__) . 'assets/css/cookie-consent-style.css', array(), '1.0.0');
-        wp_enqueue_script('egap-cookie-consent-script', plugin_dir_url(__FILE__) . 'assets/js/cookie-consent-script.js', array(), '1.0.0', true);
-    }
+function egap_opt_out_box() {
+    ob_start();
+    ?>
+    <div class="egap-opt-out-box">
+        <p><?php _e('To opt-out of Google Analytics tracking, please check the box below.', 'easy-google-analytics-pro'); ?></p>
+        <input type="checkbox" id="egap-opt-out" />
+        <label for="egap-opt-out"><?php _e('Opt-out of Google Analytics tracking', 'easy-google-analytics-pro'); ?></label>
+    </div>
+    <script>
+        document.getElementById('egap-opt-out').addEventListener('change', function() {
+            if (this.checked) {
+                window['ga-disable-UA-XXXXX-Y'] = true; // Replace 'UA-XXXXX-Y' with your Google Analytics tracking ID
+} else {
+window['ga-disable-UA-XXXXX-Y'] = false;
 }
-add_action('wp_enqueue_scripts', 'egap_enqueue_cookie_consent_assets');
+});
+</script>
+<?php
+return ob_get_clean();
+}
+add_shortcode('egap_opt_out_box', 'egap_opt_out_box');
+
+
