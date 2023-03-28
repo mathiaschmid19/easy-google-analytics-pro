@@ -1,10 +1,10 @@
 <?php
 
 function egap_cookie_consent_banner() {
-    $options = get_option('egap_settings');
-    $show_cookie_consent_banner = isset($options['egap_show_cookie_consent_banner']) ? $options['egap_show_cookie_consent_banner'] : '';
+    $egap_settings = get_option('egap_settings');
+    $cookie_banner_enabled = isset($egap_settings['cookie_banner_enabled']) ? $egap_settings['cookie_banner_enabled'] : false;
 
-    if ($show_cookie_consent_banner && (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted')) {
+    if ($cookie_banner_enabled && (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted')) {
         ?>
         <div id="egap-cookie-consent" class="egap-cookie-consent">
             <p><?php _e('We use cookies to analyze our website traffic and improve your experience. By using our site, you agree to our use of cookies.', 'easy-google-analytics-pro'); ?></p>
@@ -14,6 +14,7 @@ function egap_cookie_consent_banner() {
     }
 }
 add_action('wp_footer', 'egap_cookie_consent_banner');
+
 
 function egap_enqueue_cookie_consent_assets() {
     $options = get_option('egap_settings');

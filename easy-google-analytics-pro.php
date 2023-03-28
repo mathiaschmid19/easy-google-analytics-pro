@@ -38,6 +38,7 @@ require_once plugin_dir_path(__FILE__) . 'tracking-code.php';
 require_once plugin_dir_path(__FILE__) .  'dashboard-widget.php';
 require_once plugin_dir_path(__FILE__) . 'cookie-consent.php';
 
+
 // Register the settings.
 function egap_register_settings() {
     register_setting('egap_settings_group', 'egap_settings', 'egap_sanitize_settings');
