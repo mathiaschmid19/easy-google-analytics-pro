@@ -3,7 +3,7 @@
  * Plugin Name: Easy Google Analytics Pro
  * Plugin URI: #
  * Description: A lightweight and fast plugin for integrating Google Analytics into your WordPress website, with customizable features and advanced tracking options.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Amine Ouhannou
  * Author URI: #
  * License: GPL-2.0+
@@ -25,8 +25,8 @@ function egap_enqueue_admin_assets($hook) {
     }
 
     
-    wp_enqueue_style('egap-admin-style', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), '1.0.4');
-    wp_enqueue_script('egap-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-script.js', array('jquery'), '1.0.4', true);
+    wp_enqueue_style('egap-admin-style', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), '1.0.5');
+    wp_enqueue_script('egap-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-script.js', array('jquery'), '1.0.5', true);
 
 }
 add_action('admin_enqueue_scripts', 'egap_enqueue_admin_assets');
