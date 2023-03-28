@@ -18,11 +18,11 @@ add_action('wp_footer', 'egap_cookie_consent_banner');
 
 
 function egap_enqueue_cookie_consent_assets() {
-    if (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted') {
-        wp_enqueue_style('egap-cookie-consent-style', plugin_dir_url(__FILE__) . 'assets/css/cookie-consent-style.css', array(), '1.0.5');
-        wp_enqueue_script('egap-cookie-consent-script', plugin_dir_url(__FILE__) . 'assets/js/cookie-consent-script.js', array(), '1.0.5', true);
-    }
+    error_log('Script path: ' . plugin_dir_url(__FILE__) . 'assets/js/cookie-consent-script.js'); // Add this line for debugging
+    wp_enqueue_style('egap-cookie-consent-style', plugin_dir_url(__FILE__) . 'assets/css/cookie-consent-style.css', array(), '1.0.0');
+    wp_enqueue_script('egap-cookie-consent-script', plugin_dir_url(__FILE__) . 'assets/js/cookie-consent-script.js', array(), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'egap_enqueue_cookie_consent_assets');
+
 
 
