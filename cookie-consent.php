@@ -1,15 +1,10 @@
 <?php
 
-function egap_output_tracking_code() {
+function egap_insert_tracking_code() {
     if (!isset($_COOKIE['egap_cookie_consent']) || $_COOKIE['egap_cookie_consent'] !== 'accepted') {
         return;
     }
 
-    egap_insert_tracking_code();
-}
-add_action('wp_footer', 'egap_output_tracking_code');
-
-function egap_insert_tracking_code() {
     $egap_settings = get_option('egap_settings');
     $tracking_id = isset($egap_settings['tracking_id']) ? $egap_settings['tracking_id'] : '';
 
@@ -18,6 +13,7 @@ function egap_insert_tracking_code() {
         // Your tracking code output here.
     }
 }
+add_action('wp_footer', 'egap_insert_tracking_code');
 
 function egap_opt_out_box() {
     ob_start();
@@ -31,14 +27,12 @@ function egap_opt_out_box() {
         document.getElementById('egap-opt-out').addEventListener('change', function() {
             if (this.checked) {
                 window['ga-disable-UA-XXXXX-Y'] = true; // Replace 'UA-XXXXX-Y' with your Google Analytics tracking ID
-} else {
-window['ga-disable-UA-XXXXX-Y'] = false;
-}
-});
-</script>
-<?php
-return ob_get_clean();
+            } else {
+                window['ga-disable-UA-XXXXX-Y'] = false;
+            }
+        });
+    </script>
+    <?php
+    return ob_get_clean();
 }
 add_shortcode('egap_opt_out_box', 'egap_opt_out_box');
-
-
