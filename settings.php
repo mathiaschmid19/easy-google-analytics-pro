@@ -9,8 +9,25 @@ function egap_create_settings_page() {
         'easy-google-analytics-pro',
         'egap_render_settings_page'
     );
+
+    add_settings_field(
+        'egap_show_cookie_consent',
+        __('Show Cookie Consent Banner', 'easy-google-analytics-pro'),
+        'egap_show_cookie_consent_callback',
+        'easy-google-analytics-pro',
+        'egap_general_settings'
+    );
+
 }
 add_action('admin_menu', 'egap_create_settings_page');
+
+function egap_show_cookie_consent_callback() {
+    $options = get_option('egap_settings');
+    $show_cookie_consent = isset($options['egap_show_cookie_consent']) ? $options['egap_show_cookie_consent'] : '';
+    echo '<input type="checkbox" id="egap_show_cookie_consent" name="egap_settings[egap_show_cookie_consent]" value="1"' . checked(1, $show_cookie_consent, false) . '>';
+    echo '<label for="egap_show_cookie_consent">' . __('Enable Cookie Consent Banner', 'easy-google-analytics-pro') . '</label>';
+}
+
 
 // Render the settings page.
 function egap_render_settings_page() {
